@@ -1,0 +1,40 @@
+<nav class="relative">
+
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-black opacity-40"></div>
+
+  <!-- DESKTOP NAVBAR -->
+  <mat-toolbar color="primary" class="relative z-10 desktop-nav">
+    <img src="./assets/care-logo.jpg" routerLink="/" alt="logo"
+         class="h-12 mr-4 border rounded-lg cursor-pointer">
+
+    <button mat-button routerLink="/" class="text-white">Home</button>
+    <button mat-button routerLink="/join-our-volunteers" class="text-white">Join our Volunteers</button>
+    <button mat-button routerLink="/sign-up-for-visits" class="text-white">Sign up for Visits</button>
+    <button mat-button routerLink="/donate-now" class="text-white">Donate Now</button>
+  </mat-toolbar>
+
+  <!-- MOBILE NAVBAR -->
+  <mat-toolbar color="primary" class="relative z-10 mobile-nav">
+    <img src="./assets/care-logo.jpg" routerLink="/" alt="logo"
+         class="h-10 mr-2 border rounded-lg cursor-pointer">
+
+    <span class="spacer"></span>
+
+    <button mat-icon-button (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="mobile-sidenav-container">
+    <mat-sidenav #drawer mode="over" class="mobile-sidenav">
+      <mat-nav-list>
+        <a mat-list-item routerLink="/" (click)="drawer.close()">Home</a>
+        <a mat-list-item routerLink="/join-our-volunteers" (click)="drawer.close()">Join our Volunteers</a>
+        <a mat-list-item routerLink="/sign-up-for-visits" (click)="drawer.close()">Sign up for Visits</a>
+        <a mat-list-item routerLink="/donate-now" (click)="drawer.close()">Donate Now</a>
+      </mat-nav-list>
+    </mat-sidenav>
+  </mat-sidenav-container>
+
+</nav>

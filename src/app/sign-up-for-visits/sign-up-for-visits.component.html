@@ -1,0 +1,142 @@
+<section id="sign-up-for-visits" class="py-12 text-center">
+  <h2 class="text-3xl font-bold mb-6">Sign Up for Visits</h2>
+  <form [formGroup]="visitForm" class="max-w-xl mx-auto px-4 sm:px-6">
+
+    <!-- Full Name -->
+    <div class="mb-4">
+      <label class="block text-left font-semibold pb-2">Full Name <span class="text-red-500">*</span></label>
+      <input formControlName="fullName" type="text" class="w-full p-3 border border-gray-300 rounded-lg" />
+    </div>
+
+    <!-- Address -->
+    <div class="mb-4">
+      <label class="block text-left font-semibold pb-2">Address <span class="text-red-500">*</span></label>
+      <input formControlName="address" type="text" class="w-full p-3 border border-gray-300 rounded-lg" />
+    </div>
+
+    <div class="mb-4 flex justify-between space-x-4">
+      <!-- Point of Contact -->
+      <div class="flex-1">
+        <label class="block text-left font-semibold pb-2">Point of Contact <span class="text-red-500">*</span></label>
+        <select formControlName="pointOfContact" class="w-full p-3 border border-gray-300 rounded-lg">
+          <option value="">Select</option>
+          <option value="Self">Self</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <!-- Gender -->
+      <div class="flex-1">
+        <label class="block text-left font-semibold pb-2">Gender <span class="text-red-500">*</span></label>
+        <select formControlName="gender" class="w-full p-3 border border-gray-300 rounded-lg">
+          <option value="">Select</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Relationship (conditional) -->
+    <div class="mb-4" *ngIf="visitForm.get('pointOfContact')?.value === 'Other'">
+      <label class="block text-left font-semibold pb-2">Relationship <span class="text-red-500">*</span></label>
+      <input formControlName="relationship" type="text" class="w-full p-3 border border-gray-300 rounded-lg" />
+    </div>
+
+    <div class="mb-4 flex justify-between space-x-4">
+      <!-- Phone -->
+      <div class="flex-1">
+        <label class="block text-left font-semibold pb-2">Phone <span class="text-red-500">*</span></label>
+        <input formControlName="phone" type="text" class="w-full p-3 border border-gray-300 rounded-lg" />
+      </div>
+
+      <!-- Email -->
+      <div class="flex-1">
+        <label class="block text-left font-semibold pb-2">Email <span class="text-red-500">*</span></label>
+        <input formControlName="email" type="email" class="w-full p-3 border border-gray-300 rounded-lg" />
+      </div>
+    </div>
+
+    <!-- Preferred Days -->
+    <div class="mb-4">
+      <label class="block text-left font-semibold pb-2">What day(s) of the week are best for visitors?</label>
+      <div class="flex flex-col items-start">
+        <mat-checkbox
+          *ngFor="let day of daysOfWeek"
+          [checked]="selectedDays.includes(day)"
+          (change)="toggleDaySelection(day, $event)">
+          {{ day }}
+        </mat-checkbox>
+      </div>
+    </div>
+
+    <!-- Agreement -->
+    <div class="mb-4 flex items-center">
+      <input id="agree" formControlName="agree" type="checkbox" class="mr-2" />
+      <label for="agree" class="font-semibold">I agree to the terms and conditions. <span class="text-red-500">*</span></label>
+    </div>
+
+    <!-- Waiver Text -->
+    <div class="mb-4">
+      <textarea formControlName="waiver" rows="5" class="w-full p-3 border border-gray-300 rounded-lg" readonly>
+        CARE (Connecting and Reaching Elderly) – Elder Participant Consent and Agreement
+
+        This Consent and Agreement Form ("Agreement") is entered into by the undersigned individual ("Participant") or their authorized representative, and CARE ("CARE," "we," "us," or "our") in connection with CARE’s community-based volunteer visitation program.
+
+          1. Purpose of Participation
+          CARE is a nonprofit organization that coordinates volunteer visits to elderly individuals in the community to foster social connection, reduce loneliness, and promote emotional well-being.
+
+          By signing this agreement, the Participant (or their legal representative) agrees to receive visits or participation from volunteers under the CARE program.
+
+          2. Voluntary Participation
+          Participation in the CARE program is entirely voluntary. The Participant understands that they may choose to end participation at any time by notifying a CARE coordinator.
+
+          3. Assumption of Risk and Release of Liability
+          By signing this agreement, the Participant (or authorized representative) acknowledges and agrees to the following:
+
+          While CARE volunteers are expected to act respectfully and responsibly, CARE cannot guarantee the behavior or actions of volunteers.
+
+          CARE does not provide medical, emergency, or licensed caregiving services.
+
+          CARE is not responsible for any personal injury, illness, emotional distress, or property damage that may occur during or as a result of volunteer visits or participation in CARE activities.
+
+          Accordingly, the Participant or their representative hereby releases CARE, its officers, staff, volunteers, and affiliates from all liability, claims, or damages arising from:
+
+          Personal or emotional injury;
+
+          Property loss or damage;
+
+          Any incident occurring during or after a CARE-related visit.
+
+          4. Photo and Media Release
+          By participating in the CARE program, the Participant (or their representative) grants CARE and its affiliates the unconditional and irrevocable right to photograph, record, and use the Participant’s image, likeness, voice, and any related recordings for promotional, educational, and fundraising purposes.
+
+          This includes, but is not limited to, use in printed materials, websites, newsletters, social media, grant proposals, and press releases. The Participant understands and agrees that:
+
+          No compensation or royalties will be provided for the use of such materials.
+
+          CARE may use the materials indefinitely without further approval.
+
+          The Participant waives any right to inspect or approve the final materials.
+
+          This release is binding and cannot be revoked once this agreement is signed.
+
+          5. Privacy and Confidentiality
+          CARE will make a reasonable effort to respect the privacy and dignity of all participants. However, CARE cannot guarantee complete confidentiality of personal information shared during or related to participation in the program. By signing this agreement, the Participant acknowledges and accepts this limitation.
+
+          6. Acknowledgment and Signature
+          By signing below, the Participant or their authorized representative acknowledges that they have read and understood this agreement, agree to its terms, and consent to participate in the CARE visitation program, including the required media release.
+      </textarea>
+    </div>
+
+    <!-- Submit -->
+    <button type="button" (click)="onSubmit()"
+            [disabled]="visitForm.invalid"
+            [ngClass]="{
+        'bg-indigo-300 cursor-not-allowed': visitForm.invalid,
+        'bg-indigo-600 hover:bg-indigo-700': visitForm.valid
+      }"
+            class="text-white py-3 px-6 rounded-full w-full transition-colors duration-200">
+      Submit
+    </button>
+  </form>
+</section>

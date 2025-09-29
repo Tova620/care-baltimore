@@ -1,0 +1,124 @@
+<!-- Homepage Component -->
+
+<div class="relative">
+  <!-- First Section with Background Image -->
+<!--  <div class="w-full h-[400px] bg-contain bg-no-repeat bg-center" [ngStyle]="{'background-image': 'url(/assets/care-main.jpg)'}"></div>-->
+
+  <div class="relative w-full h-[400px] bg-white overflow-hidden">
+
+    <div class="absolute inset-0 grid grid-rows-3 grid-flow-col auto-cols-max gap-1">
+      <ng-container *ngFor="let img of collageImages; let i = index">
+        <img
+          [src]="img"
+          [alt]="'collage image ' + i"
+          class="w-40 h-[130px] object-cover opacity-0 animate-slide-fade-ltr"
+          [style.animationDelay]="(i * 100) + 'ms'"
+        />
+      </ng-container>
+
+    </div>
+
+    <!-- Center Logo -->
+    <div class="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+      <img src="/assets/care-logo.jpg" alt="Care Logo" class="w-48 h-48 rounded-full object-cover" />
+    </div>
+  </div>
+
+  <!-- Caring for Our Seniors Section -->
+  <section id="caring-for-seniors" class="pt-10 pb-12 px-5 bg-blue-950">
+    <!-- Header with primary color and larger size -->
+    <h2 class="text-left font-bold mb-20 text-white"
+        style="font-size: 50px !important">Caring for Our Seniors</h2>
+
+    <!-- Grid for services -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-10">
+
+      <!-- Rosh Hashana-->
+<!--      <a [routerLink]="['/rosh-hashana']" class="relative group">-->
+      <a class="relative group">
+        <div class="relative group">
+          <img src="./assets/care-rosh-hashana.jpg" alt="Rosh Hashana" class="w-full h-64 object-cover group-hover:scale-110 transition-all duration-300">
+          <div class="absolute bottom-0 bg-black bg-opacity-50 w-full p-4 text-white text-center">
+            <h3 class="text-xl font-semibold">Rosh Hashana Care Packages</h3>
+            <p class="text-sm">Delivering Rosh Hashanah packages to the elderly, bringing warmth and tradition to their homes.</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Chanukah -->
+<!--      <a [routerLink]="['/chanukah']" class="relative group">-->
+      <a class="relative group">
+        <div class="relative group">
+          <img src="./assets/care-chanukah.JPG" alt="chanukah" class="w-full h-64 object-cover group-hover:scale-110 transition-all duration-300">
+          <div class="absolute bottom-0 bg-black bg-opacity-50 w-full p-4 text-white text-center">
+            <h3 class="text-xl font-semibold">Chanukah Visits & Candle Lighting</h3>
+            <p class="text-sm">Visiting elderly homes during Chanukah for candle lighting and celebrating with mini parties.</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Purim -->
+<!--      <a [routerLink]="['/purim']" class="relative group">-->
+      <a class="relative group">
+        <div class="relative group">
+          <img src="./assets/care-purim.JPG" alt="purim" class="w-full h-64 object-cover group-hover:scale-110 transition-all duration-300">
+          <div class="absolute bottom-0 bg-black bg-opacity-50 w-full p-4 text-white text-center">
+            <h3 class="text-xl font-semibold">Purim</h3>
+            <p class="text-sm">Delivering Mishloach Manot to seniors on Purim</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Bi-weekly Visits -->
+<!--      <a [routerLink]="['/weekly-visits']" class="relative group">-->
+      <a class="relative group">
+        <div class="relative group">
+          <img src="./assets/care-weekly-visits.PNG" alt="bi-weekly visits" class="w-full h-64 object-cover group-hover:scale-110 transition-all duration-300">
+          <div class="absolute bottom-0 bg-black bg-opacity-50 w-full p-4 text-white text-center">
+            <h3 class="text-xl font-semibold">Bi Weekly Visits</h3>
+            <p class="text-sm">Visiting with seniors twice a month</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Join Our Volunteers, Sign up for Visits, Donate Now - Horizontally Aligned -->
+  <section class="py-12 px-5 text-center">
+    <div class="flex flex-col md:flex-row justify-center gap-6">
+
+      <!-- Join Our Volunteers Section -->
+      <div class="md:w-1/3 text-center cursor-pointer bg-gray-200 p-6 rounded-lg shadow-md hover:bg-indigo-500 hover:text-white transition duration-300" (click)="navigateToVolunteers()">
+        <h3 class="text-2xl font-bold mb-4">Join Our Volunteers</h3>
+        <p class="mb-4">Become part of something great. Help our seniors today!</p>
+        <button class="bg-indigo-500 text-white py-2 px-6 rounded-full hover:bg-indigo-700 transition duration-300">Join Now</button>
+      </div>
+
+      <!-- Sign up for Visits Section -->
+      <div class="md:w-1/3 text-center cursor-pointer bg-indigo-500 text-white p-6 rounded-lg shadow-md hover:bg-indigo-700 transition duration-300" (click)="navigateToVisits()">
+        <h3 class="text-2xl font-bold mb-4">Sign Up for Visits</h3>
+        <p class="mb-4">Sign up to have volunteers visit you or your loved ones!</p>
+        <button class="bg-white text-indigo-500 py-2 px-6 rounded-full hover:bg-gray-200 transition duration-300">Sign Up</button>
+      </div>
+
+      <!-- Donate Now Section -->
+      <div class="md:w-1/3 text-center bg-gray-200 p-6 rounded-lg shadow-md hover:bg-indigo-500 hover:text-white transition duration-300">
+        <h3 class="text-2xl font-bold mb-4">Donate Now - Help Us Help Them</h3>
+        <p class="mb-4">Your contribution can make a big difference. Donate today!</p>
+        <button class="bg-indigo-500 text-white py-2 px-6 rounded-full hover:bg-indigo-700 transition duration-300">Donate</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Contact Us Section -->
+  <section id="contact-us" class="bg-indigo-600 text-white py-9 px-5 text-left">
+    <h2 class="text-3xl font-bold">Contact Us</h2>
+    <p class="mt-4">Feel free to reach out with any questions or concerns.</p>
+    <div class="flex items-center my-6">
+      <i class="fas fa-envelope text-xl mr-3"></i> <!-- Email icon -->
+      <a href="mailto:contact.carebaltimore@gmail.com" class="text-lg hover:underline">contact.carebaltimore@gmail.com</a>
+    </div>
+    <p>EIN: 33-3469966</p>
+  </section>
+</div>

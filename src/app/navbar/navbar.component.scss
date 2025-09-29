@@ -1,0 +1,38 @@
+.active-link {
+  background-color: #0a74da; /* Blue background for active page */
+  color: white; /* White text for active page */
+  border-radius: 4px; /* Optional: Rounded corners */
+}
+
+/* Default: desktop nav visible, mobile hidden */
+.desktop-nav {
+  display: flex;
+}
+
+.mobile-nav,
+.mobile-sidenav-container {
+  display: none;
+}
+
+/* On small screens: show mobile nav, hide desktop nav */
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .mobile-nav,
+  .mobile-sidenav-container {
+    display: block;
+  }
+
+  .mobile-sidenav-container {
+    position: absolute;
+    top: 64px; /* height of toolbar */
+    width: 100%;
+    z-index: 50;
+  }
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
