@@ -1,255 +1,359 @@
 <!-- Join Volunteers Form -->
-<section id="join-our-volunteers" class="py-12 text-center">
-  <h2 class="text-3xl font-bold mb-6">Join Our Volunteers</h2>
-  <form [formGroup]="volunteerForm" class="max-w-xl mx-auto px-4 sm:px-6">
-    <!-- Full Name -->
-    <div class="mb-4">
-      <label for="fullName" class="block text-left font-semibold pb-2">
-        Full Name <span class="text-red-500">*</span>
-      </label>
-      <input
-        id="fullName"
-        formControlName="fullName"
-        type="text"
-        class="w-full p-3 border border-gray-300 rounded-lg"
-        placeholder="Enter your full name"
-      />
-      <div *ngIf="this.volunteerForm.get('fullName')?.invalid && this.volunteerForm.get('fullName')?.touched"
-           class="text-red-500 text-sm">Full Name is required.</div>
-    </div>
-
-    <!-- Age and Gender (in the same line) -->
-    <div class="mb-4 flex justify-between space-x-4">
-      <!-- Age -->
-      <div class="flex-1">
-        <label for="age" class="block text-left font-semibold pb-2">
-          Age <span class="text-red-500">*</span>
-        </label>
-        <input
-          id="age"
-          formControlName="age"
-          type="number"
-          class="w-full p-3 border border-gray-300 rounded-lg"
-          placeholder="Enter your age"
-        />
-        <div *ngIf="this.volunteerForm.get('age')?.invalid && this.volunteerForm.get('age')?.touched"
-             class="text-red-500 text-sm">Age is required.</div>
-      </div>
-
-      <!-- Gender -->
-      <div class="flex-1">
-        <label for="gender" class="block text-left font-semibold pb-2">
-          Gender <span class="text-red-500">*</span>
-        </label>
-        <select id="gender" formControlName="gender" class="w-full p-3 border border-gray-300 rounded-lg">
-          <option value="">Select Gender</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
-        <div *ngIf="this.volunteerForm.get('gender')?.invalid && this.volunteerForm.get('gender')?.touched" class="text-red-500 text-sm">Gender is required.</div>
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-blue-950 to-indigo-800 text-white py-16 px-5">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="text-5xl mb-4">🤝</div>
+      <h1 class="text-4xl font-bold mb-4">Become a CARE Volunteer</h1>
+      <p class="text-xl mb-6">Join our mission to connect hearts and brighten lives through meaningful visits</p>
+      <div class="flex justify-center space-x-8 text-sm">
+        <div class="flex items-center">
+          <div class="w-3 h-3 bg-white rounded-full mr-2"></div>
+          <span>Flexible Schedule</span>
+        </div>
+        <div class="flex items-center">
+          <div class="w-3 h-3 bg-white rounded-full mr-2"></div>
+          <span>Make a Real Impact</span>
+        </div>
+        <div class="flex items-center">
+          <div class="w-3 h-3 bg-white rounded-full mr-2"></div>
+          <span>Build Connections</span>
+        </div>
       </div>
     </div>
+  </section>
 
-    <!-- Phone Number and Email (in the same line) -->
-    <div class="mb-4 flex justify-between space-x-4">
-      <!-- Phone Number -->
-      <div class="flex-1">
-        <label for="phone" class="block text-left font-semibold pb-2">
-          Phone Number <span class="text-red-500">*</span>
-        </label>
-        <input
-          id="phone"
-          formControlName="phone"
-          type="text"
-          class="w-full p-3 border border-gray-300 rounded-lg"
-          placeholder="Enter your phone number"
-        />
-        <div *ngIf="this.volunteerForm.get('phone')?.invalid && this.volunteerForm.get('phone')?.touched" class="text-red-500 text-sm">Phone number is required.</div>
+  <!-- Form Section -->
+  <section class="py-12 px-5">
+    <div class="max-w-2xl mx-auto">
+      <div class="bg-white rounded-2xl shadow-xl p-8">
+        <form [formGroup]="volunteerForm" class="space-y-6">
+          <!-- Full Name -->
+          <div class="space-y-2">
+            <label for="fullName" class="block text-sm font-semibold text-gray-700">
+              Full Name <span class="text-red-500">*</span>
+            </label>
+            <input
+              id="fullName"
+              formControlName="fullName"
+              type="text"
+              class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-200"
+              placeholder="Enter your full name"
+            />
+            <div *ngIf="this.volunteerForm.get('fullName')?.invalid && this.volunteerForm.get('fullName')?.touched"
+                 class="text-red-500 text-sm flex items-center">
+              <span class="mr-1">⚠️</span> Full Name is required.
+            </div>
+          </div>
+
+          <!-- Age and Gender -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Age -->
+            <div class="space-y-2">
+              <label for="age" class="block text-sm font-semibold text-gray-700">
+                Age <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="age"
+                formControlName="age"
+                type="number"
+                class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-200"
+                placeholder="Enter your age"
+              />
+              <div *ngIf="this.volunteerForm.get('age')?.invalid && this.volunteerForm.get('age')?.touched"
+                   class="text-red-500 text-sm flex items-center">
+                <span class="mr-1">⚠️</span>
+                <span *ngIf="this.volunteerForm.get('age')?.errors?.['required']">Age is required.</span>
+              </div>
+            </div>
+
+            <!-- Gender -->
+            <div class="space-y-2">
+              <label for="gender" class="block text-sm font-semibold text-gray-700">
+                Gender <span class="text-red-500">*</span>
+              </label>
+              <select id="gender" formControlName="gender" class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-200">
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+              <div *ngIf="this.volunteerForm.get('gender')?.invalid && this.volunteerForm.get('gender')?.touched" class="text-red-500 text-sm flex items-center">
+                <span class="mr-1">⚠️</span> Gender is required.
+              </div>
+            </div>
+          </div>
+
+          <!-- Phone and Email -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Phone Number -->
+            <div class="space-y-2">
+              <label for="phone" class="block text-sm font-semibold text-gray-700">
+                Phone Number <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="phone"
+                formControlName="phone"
+                type="text"
+                class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-200"
+                placeholder="(xxx) xxx-xxxx"
+              />
+              <div *ngIf="this.volunteerForm.get('phone')?.invalid && this.volunteerForm.get('phone')?.touched" class="text-red-500 text-sm flex items-center">
+                <span class="mr-1">⚠️</span>
+                <span *ngIf="this.volunteerForm.get('phone')?.errors?.['required']">Phone number is required.</span>
+                <span *ngIf="this.volunteerForm.get('phone')?.errors?.['pattern']">Please enter a valid 10-digit phone number (numbers only).</span>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="space-y-2">
+              <label for="email" class="block text-sm font-semibold text-gray-700">
+                Email <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="email"
+                formControlName="email"
+                type="email"
+                class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-200"
+                placeholder="example@email.com"
+              />
+              <div *ngIf="this.volunteerForm.get('email')?.invalid && this.volunteerForm.get('email')?.touched" class="text-red-500 text-sm flex items-center">
+                <span class="mr-1">⚠️</span> Email is required.
+              </div>
+            </div>
+          </div>
+
+          <!-- Student Section -->
+          <div class="bg-gray-50 p-6 rounded-xl space-y-4">
+            <div class="flex items-center space-x-3">
+              <input
+                id="isStudent"
+                formControlName="isStudent"
+                type="checkbox"
+                class="w-5 h-5 text-indigo-600 border-2 border-gray-300 rounded focus:ring-indigo-500"
+              />
+              <label for="isStudent" class="text-sm font-semibold text-gray-700 flex items-center">
+                <span class="mr-2">🎓</span> Are you a student?
+              </label>
+            </div>
+
+            <!-- School Field (conditionally shown) -->
+            <div *ngIf="this.volunteerForm.get('isStudent')?.value" class="space-y-2">
+              <label for="school" class="block text-sm font-semibold text-gray-700">
+                School <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="school"
+                formControlName="school"
+                type="text"
+                class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-200"
+                placeholder="Enter your school name"
+              />
+              <div *ngIf="this.volunteerForm.get('school')?.invalid && this.volunteerForm.get('school')?.touched"
+                   class="text-red-500 text-sm flex items-center">
+                <span class="mr-1">⚠️</span> School is required for students.
+              </div>
+            </div>
+          </div>
+
+          <!-- Volunteer Preferences -->
+          <div class="space-y-4">
+            <label class="block text-sm font-semibold text-gray-700">
+              How would you like to help? <span class="text-red-500">*</span>
+            </label>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="bg-indigo-50 p-4 rounded-xl border-2 border-transparent hover:border-indigo-300 transition-all duration-200">
+                <label class="flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    [checked]="isPreferenceSelected('Bi-weekly visits')"
+                    (change)="onPreferenceChange($event, 'Bi-weekly visits')"
+                    class="mr-3 w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                  >
+                  <span class="flex items-center">
+                    <span class="mr-2">💝</span>
+                    <div>
+                      <div class="font-semibold">Bi-weekly Visits</div>
+                      <div class="text-sm text-gray-600">Our main program</div>
+                    </div>
+                  </span>
+                </label>
+              </div>
+              <div class="bg-blue-50 p-4 rounded-xl border-2 border-transparent hover:border-blue-300 transition-all duration-200">
+                <label class="flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    [checked]="isPreferenceSelected('Chanukah')"
+                    (change)="onPreferenceChange($event, 'Chanukah')"
+                    class="mr-3 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  >
+                  <span class="flex items-center">
+                    <span class="mr-2">🕯️</span>
+                    <div>
+                      <div class="font-semibold">Chanukah Visits</div>
+                      <div class="text-sm text-gray-600">Holiday celebrations</div>
+                    </div>
+                  </span>
+                </label>
+              </div>
+              <div class="bg-green-50 p-4 rounded-xl border-2 border-transparent hover:border-green-300 transition-all duration-200">
+                <label class="flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    [checked]="isPreferenceSelected('Rosh Hashana')"
+                    (change)="onPreferenceChange($event, 'Rosh Hashana')"
+                    class="mr-3 w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                  >
+                  <span class="flex items-center">
+                    <span class="mr-2">🍎</span>
+                    <div>
+                      <div class="font-semibold">Rosh Hashana</div>
+                      <div class="text-sm text-gray-600">Care packages</div>
+                    </div>
+                  </span>
+                </label>
+              </div>
+              <div class="bg-purple-50 p-4 rounded-xl border-2 border-transparent hover:border-purple-300 transition-all duration-200">
+                <label class="flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    [checked]="isPreferenceSelected('Purim')"
+                    (change)="onPreferenceChange($event, 'Purim')"
+                    class="mr-3 w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+                  >
+                  <span class="flex items-center">
+                    <span class="mr-2">🎭</span>
+                    <div>
+                      <div class="font-semibold">Purim</div>
+                      <div class="text-sm text-gray-600">Mishloach Manot</div>
+                    </div>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div *ngIf="this.volunteerForm.get('volunteerPreference')?.invalid && this.volunteerForm.get('volunteerPreference')?.touched"
+                 class="text-red-500 text-sm flex items-center">
+              <span class="mr-1">⚠️</span> Please select at least one volunteer preference.
+            </div>
+          </div>
+
+          <!-- Days Availability -->
+          <div *ngIf="isPreferenceSelected('Bi-weekly visits')" class="bg-indigo-50 p-6 rounded-xl space-y-4">
+            <label class="block text-sm font-semibold text-gray-700 flex items-center">
+              <span class="mr-2">📅</span> What day(s) work best for your visits?
+            </label>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div *ngFor="let day of daysOfWeek" class="bg-white p-3 rounded-lg border hover:border-indigo-300 transition-all duration-200">
+                <label class="flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    [checked]="selectedDays.includes(day)"
+                    (change)="toggleDaySelection(day, $event)"
+                    class="mr-2 w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                  >
+                  <span class="text-sm font-medium text-gray-700">{{ day }}</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Terms Agreement -->
+          <div class="bg-gray-50 p-6 rounded-xl space-y-4">
+            <div class="flex items-start space-x-3">
+              <input
+                id="agree"
+                formControlName="agree"
+                type="checkbox"
+                class="w-5 h-5 text-indigo-600 border-2 border-gray-300 rounded focus:ring-indigo-500 mt-1"
+              />
+              <label for="agree" class="text-sm font-semibold text-gray-700">
+                I agree to the terms and conditions listed below. <span class="text-red-500">*</span>
+              </label>
+            </div>
+            <div *ngIf="this.volunteerForm.get('agree')?.invalid && this.volunteerForm.get('agree')?.touched"
+                 class="text-red-500 text-sm flex items-center">
+              <span class="mr-1">⚠️</span> You must agree to the terms.
+            </div>
+
+            <!-- Waiver Text -->
+            <div>
+              <textarea
+                id="waiver"
+                formControlName="waiver"
+                rows="8"
+                class="w-full p-4 border-2 border-gray-200 rounded-xl bg-white text-sm max-h-48 overflow-y-auto"
+                readonly>
+CARE (Connecting and Reaching Elderly) – Volunteer Terms and Agreement
+
+This Volunteer Terms and Agreement ("Agreement") is made between CARE (Connecting and Reaching Elderly) ("CARE," "we," "us," or "our") and the undersigned volunteer ("Volunteer," "you," or "your"). By participating in any volunteer activity with CARE, you agree to the terms below.
+
+1. Purpose of the Program
+CARE is a community initiative connecting volunteers of all ages with elderly citizens to promote companionship, engagement, and emotional well-being through visits and community support.
+
+2. Assumption of Risk and Release of Liability
+By signing this agreement and participating in CARE activities, you acknowledge and agree to the following:
+
+You understand that visiting elderly citizens in their homes, traveling to and from visit locations, or participating in any CARE-sponsored or affiliated activities involves certain risks, including but not limited to injury, property damage, illness, accidents, or unforeseen incidents.
+
+You voluntarily assume all risks associated with volunteering, including transportation (whether by private vehicle, public transit, or other means), personal interaction, and all activities related to or performed on behalf of CARE.
+
+You hereby release, waive, and discharge CARE, its officers, directors, coordinators, staff, affiliates, and partners from any and all liability, claims, demands, causes of action, or expenses (including attorney's fees) arising out of or related to:
+
+Any personal injury, illness, or death;
+Any damage or loss to personal property;
+Any accident or incident occurring during or as a result of volunteering, including driving to and from volunteer assignments.
+
+3. Insurance Disclaimer
+CARE does not provide health, medical, automobile, or liability insurance for volunteers. Volunteers are encouraged to maintain their own insurance coverage.
+
+4. Volunteer Conduct and Responsibility
+Volunteers are expected to:
+
+Treat all elderly individuals and their environments with respect and dignity.
+Maintain confidentiality regarding any personal or sensitive information.
+Not offer medical advice, perform physical assistance (e.g., lifting or moving individuals), or provide personal care services unless specifically trained and authorized to do so.
+Follow all instructions, safety guidelines, and local laws while participating in CARE activities.
+
+CARE reserves the right to remove or disqualify any volunteer whose behavior is deemed unsafe, inappropriate, or inconsistent with CARE's mission and values.
+
+5. Photo and Media Release
+By participating as a volunteer, you grant CARE and its affiliates the irrevocable right to take and use photographs, video, and/or audio recordings of you in connection with CARE activities for promotional, educational, and fundraising purposes. This includes use in print, digital, and social media platforms.
+
+You waive the right to inspect or approve the finished product wherein your likeness appears, and you release CARE from any claims related to the use of your image or voice, including any compensation or royalties.
+
+If you do not wish to be photographed or recorded, you must notify CARE in writing prior to participation.
+
+6. Acknowledgment and Acceptance
+By signing or electronically agreeing to this Agreement, you acknowledge that:
+
+You have read and understood this document in its entirety.
+You agree to abide by all CARE policies and expectations.
+You are participating voluntarily and at your own risk.
+You are either over the age of 18 or have obtained permission from a parent/guardian if under 18.
+              </textarea>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="pt-6"
+               [matTooltip]="volunteerForm.invalid ? getSubmitTooltip() : ''"
+               matTooltipPosition="above">
+            <button
+              (click)="onSubmit()"
+              type="button"
+              [disabled]="volunteerForm.invalid"
+              [ngClass]="{
+                'bg-gray-300 cursor-not-allowed text-gray-500': volunteerForm.invalid,
+                'bg-gradient-to-r from-blue-950 to-indigo-800 hover:from-blue-900 hover:to-indigo-700 text-white': volunteerForm.valid
+              }"
+              class="w-full py-4 px-8 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+              <span class="flex items-center justify-center">
+                <span class="mr-2">💝</span>
+                Join Our CARE Family
+              </span>
+            </button>
+          </div>
+        </form>
       </div>
-
-      <!-- Email -->
-      <div class="flex-1">
-        <label for="email" class="block text-left font-semibold pb-2">
-          Email <span class="text-red-500">*</span>
-        </label>
-        <input
-          id="email"
-          formControlName="email"
-          type="email"
-          class="w-full p-3 border border-gray-300 rounded-lg"
-          placeholder="Enter your email"
-        />
-        <div *ngIf="this.volunteerForm.get('email')?.invalid && this.volunteerForm.get('email')?.touched" class="text-red-500 text-sm">Email is required.</div>
-      </div>
     </div>
-
-    <!-- Student Checkbox -->
-    <div class="mb-4 flex items-center">
-      <input
-        id="isStudent"
-        formControlName="isStudent"
-        type="checkbox"
-        class="mr-2"
-      />
-      <label for="isStudent" class="font-semibold">Are you a student?</label>
-    </div>
-
-    <!-- School Field (conditionally shown) -->
-    <div class="mb-4" *ngIf="this.volunteerForm.get('isStudent')?.value">
-      <label for="school" class="block text-left font-semibold pb-2">
-        School <span class="text-red-500">*</span>
-      </label>
-      <input
-        id="school"
-        formControlName="school"
-        type="text"
-        class="w-full p-3 border border-gray-300 rounded-lg"
-        placeholder="Enter your school name"
-      />
-      <div *ngIf="this.volunteerForm.get('school')?.invalid && this.volunteerForm.get('school')?.touched"
-           class="text-red-500 text-sm">School is required for students.</div>
-    </div>
-
-    <!-- Volunteer Preference -->
-    <div class="mb-4">
-      <label class="block text-left font-semibold pb-2">
-        Volunteer Preference <span class="text-red-500">*</span>
-      </label>
-      <div class="flex flex-col items-start">
-        <mat-checkbox
-          [checked]="isPreferenceSelected('Rosh Hashana')"
-          (change)="onPreferenceChange($event, 'Rosh Hashana')">
-          Rosh Hashana
-        </mat-checkbox>
-        <mat-checkbox
-          [checked]="isPreferenceSelected('Chanukah')"
-          (change)="onPreferenceChange($event, 'Chanukah')">
-          Chanukah
-        </mat-checkbox>
-        <mat-checkbox
-          [checked]="isPreferenceSelected('Purim')"
-          (change)="onPreferenceChange($event, 'Purim')">
-          Purim
-        </mat-checkbox>
-        <mat-checkbox
-          [checked]="isPreferenceSelected('Bi-weekly visits')"
-          (change)="onPreferenceChange($event, 'Bi-weekly visits')">
-          Bi-weekly visits
-        </mat-checkbox>
-      </div>
-      <div *ngIf="this.volunteerForm.get('volunteerPreference')?.invalid && this.volunteerForm.get('volunteerPreference')?.touched"
-           class="text-red-500 text-sm">Volunteer Preference is required.</div>
-    </div>
-
-    <!-- Follow-up Question -->
-    <div *ngIf="isPreferenceSelected('Bi-weekly visits')" class="mt-4">
-      <label class="block text-left font-semibold pb-2">
-        What day(s) of the week are best for you?
-      </label>
-      <div class="flex flex-col items-start">
-        <mat-checkbox
-          *ngFor="let day of daysOfWeek"
-          [checked]="selectedDays.includes(day)"
-          (change)="toggleDaySelection(day, $event)">
-          {{ day }}
-        </mat-checkbox>
-      </div>
-    </div>
-
-    <!-- Agreement Checkbox -->
-    <div class="mb-4 flex items-center">
-      <input
-        id="agree"
-        formControlName="agree"
-        type="checkbox"
-        class="mr-2"
-      />
-      <label for="agree" class="font-semibold">
-        I agree to the terms and conditions listed below. <span class="text-red-500">*</span>
-      </label>
-      <div *ngIf="this.volunteerForm.get('agree')?.invalid && this.volunteerForm.get('agree')?.touched"
-           class="text-red-500 text-sm">You must agree to the terms.</div>
-    </div>
-
-    <!-- Waiver Scroll Box (No label) -->
-    <div class="mb-4">
-      <textarea
-        id="waiver"
-        formControlName="waiver"
-        rows="5"
-        class="w-full p-3 border border-gray-300 rounded-lg"
-        readonly
-      >
-        CARE (Connecting and Reaching Elderly) – Volunteer Terms and Agreement
-
-        This Volunteer Terms and Agreement ("Agreement") is made between CARE (Connecting and Reaching Elderly) ("CARE," "we," "us," or "our") and the undersigned volunteer ("Volunteer," "you," or "your"). By participating in any volunteer activity with CARE, you agree to the terms below.
-
-          1. Purpose of the Program
-          CARE is a community initiative connecting volunteers of all ages with elderly citizens to promote companionship, engagement, and emotional well-being through visits and community support.
-
-          2. Assumption of Risk and Release of Liability
-          By signing this agreement and participating in CARE activities, you acknowledge and agree to the following:
-
-          You understand that visiting elderly citizens in their homes, traveling to and from visit locations, or participating in any CARE-sponsored or affiliated activities involves certain risks, including but not limited to injury, property damage, illness, accidents, or unforeseen incidents.
-
-          You voluntarily assume all risks associated with volunteering, including transportation (whether by private vehicle, public transit, or other means), personal interaction, and all activities related to or performed on behalf of CARE.
-
-          You hereby release, waive, and discharge CARE, its officers, directors, coordinators, staff, affiliates, and partners from any and all liability, claims, demands, causes of action, or expenses (including attorney’s fees) arising out of or related to:
-
-          Any personal injury, illness, or death;
-
-          Any damage or loss to personal property;
-
-          Any accident or incident occurring during or as a result of volunteering, including driving to and from volunteer assignments.
-
-          3. Insurance Disclaimer
-          CARE does not provide health, medical, automobile, or liability insurance for volunteers. Volunteers are encouraged to maintain their own insurance coverage.
-
-          4. Volunteer Conduct and Responsibility
-          Volunteers are expected to:
-
-          Treat all elderly individuals and their environments with respect and dignity.
-
-          Maintain confidentiality regarding any personal or sensitive information.
-
-          Not offer medical advice, perform physical assistance (e.g., lifting or moving individuals), or provide personal care services unless specifically trained and authorized to do so.
-
-          Follow all instructions, safety guidelines, and local laws while participating in CARE activities.
-
-          CARE reserves the right to remove or disqualify any volunteer whose behavior is deemed unsafe, inappropriate, or inconsistent with CARE’s mission and values.
-
-          5. Photo and Media Release
-          By participating as a volunteer, you grant CARE and its affiliates the irrevocable right to take and use photographs, video, and/or audio recordings of you in connection with CARE activities for promotional, educational, and fundraising purposes. This includes use in print, digital, and social media platforms.
-
-          You waive the right to inspect or approve the finished product wherein your likeness appears, and you release CARE from any claims related to the use of your image or voice, including any compensation or royalties.
-
-          If you do not wish to be photographed or recorded, you must notify CARE in writing prior to participation.
-
-          6. Acknowledgment and Acceptance
-          By signing or electronically agreeing to this Agreement, you acknowledge that:
-
-          You have read and understood this document in its entirety.
-
-          You agree to abide by all CARE policies and expectations.
-
-          You are participating voluntarily and at your own risk.
-
-          You are either over the age of 18 or have obtained permission from a parent/guardian if under 18.
-      </textarea>
-    </div>
-
-    <!-- Submit Button -->
-    <button
-      (click)="onSubmit()"
-      type="button"
-      [disabled]="volunteerForm.invalid"
-      [ngClass]="{
-    'bg-indigo-300 cursor-not-allowed': volunteerForm.invalid,
-    'bg-indigo-600 hover:bg-indigo-700': volunteerForm.valid
-  }"
-      class="text-white py-3 px-6 rounded-full w-full focus:bg-indigo-800 transition-colors duration-200"
-    >
-      Submit
-    </button>
-  </form>
-</section>
+  </section>
+</div>

@@ -12,12 +12,13 @@ import {Router, RouterLink} from '@angular/router';
 export class HomepageComponent implements OnInit {
   collageImages: string[] = [];
   processedImages: string[] = [];
+  Math = Math;
 
   constructor( private readonly _route: Router) {
   }
 
   ngOnInit() {
-    const imageCount = 28;
+    const imageCount = 33;
     const images: string[] = [];
 
     for (let i = 1; i < imageCount; i++) {
@@ -27,33 +28,47 @@ export class HomepageComponent implements OnInit {
     // Save original list if needed
     this.collageImages = images;
 
-    // Shuffle while avoiding adjacent duplicates
-    const totalImagesNeeded = 30; // or however many you want to display
-    this.processedImages = this.shuffleWithoutAdjacentDuplicates(images, totalImagesNeeded);
+    // Adjust image count based on screen size
+    this.updateImageCount();
+
+    // Listen for window resize
+    window.addEventListener('resize', () => this.updateImageCount());
+  }
+
+  updateImageCount() {
+    const isMobile = window.innerWidth < 768;
+    const totalImagesNeeded = isMobile ? 12 : 30; // Fewer images on mobile
+    this.processedImages = this.shuffleWithoutAdjacentDuplicates(this.collageImages, totalImagesNeeded);
   }
 
   shuffleWithoutAdjacentDuplicates(images: string[], totalNeeded: number): string[] {
-    let expanded: string[] = [];
+    const result: string[] = [];
+    const available = [...images];
 
-    // Repeat images to meet totalNeeded length
-    while (expanded.length < totalNeeded) {
-      expanded = expanded.concat(images);
+    for (let i = 0; i < totalNeeded; i++) {
+      const lastImage = result[result.length - 1];
+      const validChoices = available.filter(img => img !== lastImage);
+
+      if (validChoices.length === 0) {
+        available.push(...images.filter(img => img !== lastImage));
+        validChoices.push(...available.filter(img => img !== lastImage));
+      }
+
+      const randomIndex = Math.floor(Math.random() * validChoices.length);
+      const chosen = validChoices[randomIndex];
+      result.push(chosen);
+
+      const chosenIndexInAvailable = available.indexOf(chosen);
+      if (chosenIndexInAvailable > -1) {
+        available.splice(chosenIndexInAvailable, 1);
+      }
+
+      if (available.length === 0) {
+        available.push(...images.filter(img => img !== chosen));
+      }
     }
 
-    expanded = expanded.slice(0, totalNeeded); // trim if over
-
-    const maxAttempts = 10;
-    let attempt = 0;
-
-    const hasAdjacentDuplicates = (arr: string[]) =>
-      arr.some((img, i) => i > 0 && img === arr[i - 1]);
-
-    do {
-      expanded = this.shuffleArray([...expanded]);
-      attempt++;
-    } while (hasAdjacentDuplicates(expanded) && attempt < maxAttempts);
-
-    return expanded;
+    return result;
   }
 
   shuffleArray(arr: string[]): string[] {

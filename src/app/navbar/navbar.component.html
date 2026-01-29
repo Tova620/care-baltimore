@@ -4,18 +4,30 @@
   <div class="absolute inset-0 bg-black opacity-40"></div>
 
   <!-- DESKTOP NAVBAR -->
-  <mat-toolbar color="primary" class="relative z-10 desktop-nav">
+  <mat-toolbar class="relative z-10 desktop-nav bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-600 text-white">
     <img src="./assets/care-logo.jpg" routerLink="/" alt="logo"
          class="h-12 mr-4 border rounded-lg cursor-pointer">
 
-    <button mat-button routerLink="/" class="text-white">Home</button>
-    <button mat-button routerLink="/join-our-volunteers" class="text-white">Join our Volunteers</button>
-    <button mat-button routerLink="/sign-up-for-visits" class="text-white">Sign up for Visits</button>
-    <button mat-button routerLink="/donate-now" class="text-white">Donate Now</button>
+    <button mat-button routerLink="/" class="text-white nav-btn">
+      <span class="hidden sm:inline">Home</span>
+      <span class="sm:hidden">Home</span>
+    </button>
+    <button mat-button routerLink="/join-our-volunteers" class="text-white nav-btn">
+      <span class="hidden sm:inline">Become a Volunteer</span>
+      <span class="sm:hidden">Volunteer</span>
+    </button>
+    <button mat-button routerLink="/sign-up-for-visits" class="text-white nav-btn">
+      <span class="hidden sm:inline">Sign up for Visits</span>
+      <span class="sm:hidden">Visits</span>
+    </button>
+    <!-- <button mat-button routerLink="/donate-now" class="text-white nav-btn">
+      <span class="hidden sm:inline">Donate Now</span>
+      <span class="sm:hidden">Donate</span>
+    </button> -->
   </mat-toolbar>
 
   <!-- MOBILE NAVBAR -->
-  <mat-toolbar color="primary" class="relative z-10 mobile-nav">
+  <mat-toolbar class="relative z-10 mobile-nav bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-600 text-white">
     <img src="./assets/care-logo.jpg" routerLink="/" alt="logo"
          class="h-10 mr-2 border rounded-lg cursor-pointer">
 
@@ -32,7 +44,7 @@
         <a mat-list-item routerLink="/" (click)="drawer.close()">Home</a>
         <a mat-list-item routerLink="/join-our-volunteers" (click)="drawer.close()">Join our Volunteers</a>
         <a mat-list-item routerLink="/sign-up-for-visits" (click)="drawer.close()">Sign up for Visits</a>
-        <a mat-list-item routerLink="/donate-now" (click)="drawer.close()">Donate Now</a>
+        <!-- <a mat-list-item routerLink="/donate-now" (click)="drawer.close()">Donate Now</a> -->
       </mat-nav-list>
     </mat-sidenav>
   </mat-sidenav-container>
