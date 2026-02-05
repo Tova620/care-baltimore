@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {RouterLink} from '@angular/router';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
@@ -17,7 +16,7 @@ import {FirebaseService} from '../firebase.service';
 })
 export class JoinOurVolunteersComponent implements OnInit {
   volunteerForm!: FormGroup;
-  preferences: string[] = ['Rosh Hashana', 'Chanukah', 'Purim', 'Bi-weekly visits'];
+  preferences: string[] = ['Rosh Hashana', 'Chanukah', 'Purim', 'Home visits'];
   daysOfWeek: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Shabbos', 'Any'];
   selectedDays: string[] = [];
 
@@ -134,9 +133,9 @@ By volunteering with CARE, the Volunteer grants CARE and its affiliates the unco
     if (this.volunteerForm.valid) {
       return 'Click to submit your volunteer application';
     }
-    
+
     const missingFields: string[] = [];
-    
+
     if (this.volunteerForm.get('fullName')?.invalid) missingFields.push('Full Name');
     if (this.volunteerForm.get('age')?.invalid) missingFields.push('Age');
     if (this.volunteerForm.get('gender')?.invalid) missingFields.push('Gender');
@@ -145,7 +144,7 @@ By volunteering with CARE, the Volunteer grants CARE and its affiliates the unco
     if (this.volunteerForm.get('school')?.invalid) missingFields.push('School');
     if (this.volunteerForm.get('volunteerPreference')?.invalid) missingFields.push('Volunteer Preferences');
     if (this.volunteerForm.get('agree')?.invalid) missingFields.push('Terms Agreement');
-    
+
     return `Please complete: ${missingFields.join(', ')}`;
   }
 
@@ -167,7 +166,7 @@ By volunteering with CARE, the Volunteer grants CARE and its affiliates the unco
       };
 
       const result = await this.firebaseService.submitVolunteerForm(data);
-      
+
       if (result.success) {
         alert('Thank you! Your volunteer application has been submitted.');
         this.volunteerForm.reset();

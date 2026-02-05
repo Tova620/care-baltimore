@@ -165,14 +165,14 @@
                 <label class="flex items-center cursor-pointer">
                   <input
                     type="checkbox"
-                    [checked]="isPreferenceSelected('Bi-weekly visits')"
-                    (change)="onPreferenceChange($event, 'Bi-weekly visits')"
+                    [checked]="isPreferenceSelected('Home visits')"
+                    (change)="onPreferenceChange($event, 'Home visits')"
                     class="mr-3 w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
                   >
                   <span class="flex items-center">
                     <span class="mr-2">💝</span>
                     <div>
-                      <div class="font-semibold">Bi-weekly Visits</div>
+                      <div class="font-semibold">Home Visits</div>
                       <div class="text-sm text-gray-600">Our main program</div>
                     </div>
                   </span>
@@ -237,8 +237,8 @@
           </div>
 
           <!-- Days Availability -->
-          <div *ngIf="isPreferenceSelected('Bi-weekly visits')" class="bg-indigo-50 p-6 rounded-xl space-y-4">
-            <label class="block text-sm font-semibold text-gray-700 flex items-center">
+          <div *ngIf="isPreferenceSelected('Home visits')" class="bg-indigo-50 p-6 rounded-xl space-y-4">
+            <label class="text-sm font-semibold text-gray-700 flex items-center">
               <span class="mr-2">📅</span> What day(s) work best for your visits?
             </label>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
