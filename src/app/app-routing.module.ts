@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './auth.guard';
 
 // Import all your components here
 import { HomepageComponent } from './homepage/homepage.component';
@@ -12,6 +13,8 @@ import { RoshHashanaComponent } from './rosh-hashana/rosh-hashana.component';
 import { PurimComponent } from './purim/purim.component';
 import { ChanukahComponent } from './chanukah/chanukah.component';
 import { WeeklyVisitsComponent } from './weekly-visits/weekly-visits.component';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { VisitLogComponent } from './visit-log/visit-log.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -24,6 +27,8 @@ const routes: Routes = [
   { path: 'purim', component: PurimComponent },
   { path: 'chanukah', component: ChanukahComponent },
   { path: 'weekly-visits', component: WeeklyVisitsComponent },
+  { path: 'sign-in', component: SignInComponent },
+  { path: 'visit-log', component: VisitLogComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

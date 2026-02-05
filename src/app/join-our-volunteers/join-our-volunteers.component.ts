@@ -19,6 +19,7 @@ export class JoinOurVolunteersComponent implements OnInit {
   preferences: string[] = ['Rosh Hashana', 'Chanukah', 'Purim', 'Home visits'];
   daysOfWeek: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Shabbos', 'Any'];
   selectedDays: string[] = [];
+  passwordMismatch = false;
 
 
   constructor(private fb: FormBuilder,
@@ -61,12 +62,13 @@ By volunteering with CARE, the Volunteer grants CARE and its affiliates the unco
       gender: ['', Validators.required],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', Validators.required],
       isStudent: [false],
       school: [''],
-      volunteerPreference: [[], Validators.required],  // New preference field with default empty array
-
+      volunteerPreference: [[], Validators.required],
       waiver: [waiverText],
-      agree: [false, Validators.requiredTrue]  // Agreement is mandatory
+      agree: [false, Validators.requiredTrue]
     });
 
     this.toggleSchoolValidation();
@@ -130,7 +132,7 @@ By volunteering with CARE, the Volunteer grants CARE and its affiliates the unco
   }
 
   getSubmitTooltip(): string {
-    if (this.volunteerForm.valid) {
+    if (this.volunteerForm.valid && !this.passwordMismatch) {
       return 'Click to submit your volunteer application';
     }
 
@@ -141,6 +143,9 @@ By volunteering with CARE, the Volunteer grants CARE and its affiliates the unco
     if (this.volunteerForm.get('gender')?.invalid) missingFields.push('Gender');
     if (this.volunteerForm.get('phone')?.invalid) missingFields.push('Phone');
     if (this.volunteerForm.get('email')?.invalid) missingFields.push('Email');
+    if (this.volunteerForm.get('password')?.invalid) missingFields.push('Password');
+    if (this.volunteerForm.get('confirmPassword')?.invalid) missingFields.push('Confirm Password');
+    if (this.passwordMismatch) missingFields.push('Passwords must match');
     if (this.volunteerForm.get('school')?.invalid) missingFields.push('School');
     if (this.volunteerForm.get('volunteerPreference')?.invalid) missingFields.push('Volunteer Preferences');
     if (this.volunteerForm.get('agree')?.invalid) missingFields.push('Terms Agreement');
@@ -149,7 +154,12 @@ By volunteering with CARE, the Volunteer grants CARE and its affiliates the unco
   }
 
   async onSubmit() {
-    if (this.volunteerForm.valid) {
+    // Check password match
+    const password = this.volunteerForm.get('password')?.value;
+    const confirmPassword = this.volunteerForm.get('confirmPassword')?.value;
+    this.passwordMismatch = password !== confirmPassword;
+
+    if (this.volunteerForm.valid && !this.passwordMismatch) {
       const formData = this.volunteerForm.value;
 
       const data = {
@@ -158,6 +168,7 @@ By volunteering with CARE, the Volunteer grants CARE and its affiliates the unco
         gender: formData.gender,
         phone: formData.phone,
         email: formData.email,
+        password: formData.password,
         isStudent: formData.isStudent,
         school: formData.school,
         volunteerPreference: formData.volunteerPreference,
@@ -168,9 +179,10 @@ By volunteering with CARE, the Volunteer grants CARE and its affiliates the unco
       const result = await this.firebaseService.submitVolunteerForm(data);
 
       if (result.success) {
-        alert('Thank you! Your volunteer application has been submitted.');
+        alert('Thank you! Your volunteer application has been submitted. You can now sign in.');
         this.volunteerForm.reset();
         this.selectedDays = [];
+        this.passwordMismatch = false;
         // Reset form to initial state
         const waiverText = `CARE (Connecting and Reaching Elderly) – Volunteer Terms and Agreement
 

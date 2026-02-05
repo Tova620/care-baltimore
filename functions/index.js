@@ -9,6 +9,7 @@ setGlobalOptions({maxInstances: 10});
 // Google Sheet IDs
 const VISITOR_SHEET_ID = "1J8P6hoN81akdJGgAKFiraUy9-znTd_XzQ-kAZy_soj0";
 const VOLUNTEER_SHEET_ID = "1FEAg9tbecNAf_oyqCpOk_Nssby0x6WAQIkcGFFEdPbM";
+const VISIT_LOG_SHEET_ID = "YOUR_VISIT_LOG_SHEET_ID"; // Replace with actual sheet ID
 
 /**
  * Trigger whenever a document in visitRequests is created/updated/deleted
@@ -149,5 +150,79 @@ exports.volunteerSignupToSheet = onDocumentWritten(
       });
 
       logger.info("Appended volunteer row:", row);
+    },
+);
+
+/**
+ * Trigger whenever a document in visitLogs is created/updated/deleted
+ * Path: visitLogs/{docId}
+ */
+exports.visitLogToSheet = onDocumentWritten(
+    "visitLogs/{docId}",
+    async (event) => {
+      const docId = event.params.docId;
+
+      // If the document was deleted, skip
+      if (!event.data.after.exists) {
+        logger.info(`Document ${docId} deleted, not appending to sheet.`);
+        return;
+      }
+
+      const data = event.data.after.data() || {};
+
+      // Handle Firestore timestamp for submittedAt
+      let submittedAtIso;
+      if (data.submittedAt && typeof data.submittedAt.toDate === "function") {
+        submittedAtIso = data.submittedAt.toDate().toISOString();
+      } else {
+        submittedAtIso = new Date().toISOString();
+      }
+
+      // Handle visitDate
+      let visitDateIso;
+      if (data.visitDate) {
+        if (typeof data.visitDate.toDate === "function") {
+          visitDateIso = data.visitDate.toDate().toISOString();
+        } else if (data.visitDate instanceof Date) {
+          visitDateIso = data.visitDate.toISOString();
+        } else {
+          visitDateIso = data.visitDate;
+        }
+      } else {
+        visitDateIso = "";
+      }
+
+      // Build the row for visit logs
+      const row = [
+        submittedAtIso, // A: Timestamp
+        data.email || "", // B: Volunteer Email
+        data.name || "", // C: Volunteer Name
+        data.visitedPerson || "", // D: Person Visited
+        visitDateIso, // E: Visit Date
+        data.notes || "", // F: Notes
+      ];
+
+      // Auth with the service account
+      const auth = new google.auth.GoogleAuth({
+        keyFile: "./service-account-key.json",
+        scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+      });
+      const authClient = await auth.getClient();
+
+      const sheets = google.sheets({
+        version: "v4",
+        auth: authClient,
+      });
+
+      await sheets.spreadsheets.values.append({
+        spreadsheetId: VISIT_LOG_SHEET_ID,
+        range: "A:F",
+        valueInputOption: "USER_ENTERED",
+        requestBody: {
+          values: [row],
+        },
+      });
+
+      logger.info("Appended visit log row:", row);
     },
 );
