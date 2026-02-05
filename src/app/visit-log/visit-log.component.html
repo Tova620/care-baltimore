@@ -1,31 +1,31 @@
 <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
   <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-xl p-8">
     <h2 class="text-3xl font-bold text-center text-indigo-600 mb-6">Visit Log</h2>
-    
+
     <form [formGroup]="visitLogForm" (ngSubmit)="onSubmit()">
       <div class="mb-4">
-        <mat-form-field appearance="outline" class="w-full">
+        <mat-form-field appearance="fill" class="w-full">
           <mat-label>Your Email</mat-label>
           <input matInput formControlName="email">
         </mat-form-field>
       </div>
 
       <div class="mb-4">
-        <mat-form-field appearance="outline" class="w-full">
+        <mat-form-field appearance="fill" class="w-full">
           <mat-label>Your Name</mat-label>
           <input matInput formControlName="name">
         </mat-form-field>
       </div>
 
       <div class="mb-4">
-        <mat-form-field appearance="outline" class="w-full">
+        <mat-form-field appearance="fill" class="w-full">
           <mat-label>Name of Person Visited</mat-label>
           <input matInput formControlName="visitedPerson" placeholder="Enter name">
         </mat-form-field>
       </div>
 
       <div class="mb-4">
-        <mat-form-field appearance="outline" class="w-full">
+        <mat-form-field appearance="fill" class="w-full">
           <mat-label>Visit Date</mat-label>
           <input matInput [matDatepicker]="picker" formControlName="visitDate">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -34,7 +34,7 @@
       </div>
 
       <div class="mb-6">
-        <mat-form-field appearance="outline" class="w-full">
+        <mat-form-field appearance="fill" class="w-full">
           <mat-label>Notes</mat-label>
           <textarea matInput formControlName="notes" rows="4" placeholder="Any notes about the visit..."></textarea>
         </mat-form-field>
