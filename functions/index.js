@@ -9,7 +9,7 @@ setGlobalOptions({maxInstances: 10});
 // Google Sheet IDs
 const VISITOR_SHEET_ID = "1J8P6hoN81akdJGgAKFiraUy9-znTd_XzQ-kAZy_soj0";
 const VOLUNTEER_SHEET_ID = "1FEAg9tbecNAf_oyqCpOk_Nssby0x6WAQIkcGFFEdPbM";
-const VISIT_LOG_SHEET_ID = "YOUR_VISIT_LOG_SHEET_ID"; // Replace with actual sheet ID
+const VISIT_LOG_SHEET_ID = "1sByoitmBIcrvFCknNyC8lM1Fz5nFx3q1iPRl_7X560k";
 
 /**
  * Trigger whenever a document in visitRequests is created/updated/deleted
