@@ -179,17 +179,17 @@ exports.visitLogToSheet = onDocumentWritten(
       }
 
       // Handle visitDate
-      let visitDateIso;
+      let visitDateFormatted;
       if (data.visitDate) {
         if (typeof data.visitDate.toDate === "function") {
-          visitDateIso = data.visitDate.toDate().toISOString();
+          visitDateFormatted = data.visitDate.toDate().toLocaleDateString();
         } else if (data.visitDate instanceof Date) {
-          visitDateIso = data.visitDate.toISOString();
+          visitDateFormatted = data.visitDate.toLocaleDateString();
         } else {
-          visitDateIso = data.visitDate;
+          visitDateFormatted = new Date(data.visitDate).toLocaleDateString();
         }
       } else {
-        visitDateIso = "";
+        visitDateFormatted = "";
       }
 
       // Build the row for visit logs
@@ -198,7 +198,7 @@ exports.visitLogToSheet = onDocumentWritten(
         data.email || "", // B: Volunteer Email
         data.name || "", // C: Volunteer Name
         data.visitedPerson || "", // D: Person Visited
-        visitDateIso, // E: Visit Date
+        visitDateFormatted, // E: Visit Date
         data.notes || "", // F: Notes
       ];
 
