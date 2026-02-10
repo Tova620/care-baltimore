@@ -1,15 +1,14 @@
 <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
   <div class="bg-white rounded-lg shadow-xl p-8 max-w-md w-full">
     <h2 class="text-3xl font-bold text-center text-indigo-600 mb-6">Volunteer Sign In</h2>
-    
+
     <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
       <div class="mb-4">
         <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
-        <input 
-          type="email" 
-          formControlName="email" 
+        <input
+          type="email"
+          formControlName="email"
           placeholder="your@email.com"
-          (blur)="checkEmail()"
           class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none">
         <div *ngIf="emailErrorMessage" class="text-red-600 text-sm mt-1">
           {{ emailErrorMessage }}
@@ -17,11 +16,11 @@
       </div>
 
       <div class="mb-4">
-        <label class="block text-sm font-semibold text-gray-700 mb-2">{{ passwordLabel }}</label>
-        <input 
-          type="password" 
-          formControlName="password" 
-          [placeholder]="passwordPlaceholder"
+        <label class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Enter your password"
           class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none">
       </div>
 

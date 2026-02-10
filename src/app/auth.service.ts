@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { getApp } from 'firebase/app';
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, User, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, User, createUserWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 import { BehaviorSubject } from 'rxjs';
 
@@ -65,21 +65,27 @@ export class AuthService {
 
   async checkIfUserHasPassword(email: string): Promise<boolean | null> {
     try {
-      console.log('Checking volunteers collection for:', email);
       const volunteersRef = collection(this.db, 'volunteers');
       const q = query(volunteersRef, where('email', '==', email));
       const querySnapshot = await getDocs(q);
-
-      console.log('Query snapshot empty?', querySnapshot.empty);
-      console.log('Number of docs found:', querySnapshot.size);
 
       if (querySnapshot.empty) {
         return null; // Email not registered
       }
 
-      // If volunteer exists in Firestore, return false (they need to create password)
-      // This avoids the fetchSignInMethodsForEmail API issue
-      return false;
+      // Check if user has Firebase Auth account
+      try {
+        const signInMethods = await fetchSignInMethodsForEmail(this.auth, email);
+        console.log('Sign in methods for', email, ':', signInMethods);
+        return signInMethods.length > 0;
+      } catch (authError: any) {
+        console.log('Auth error:', authError);
+        // If fetchSignInMethodsForEmail fails, assume they need to create password
+        if (authError.code === 'auth/invalid-email') {
+          return null;
+        }
+        return false;
+      }
     } catch (error) {
       console.log('Error in checkIfUserHasPassword:', error);
       return null;
