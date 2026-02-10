@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { getApp } from 'firebase/app';
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, User, createUserWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, User, createUserWithEmailAndPassword, fetchSignInMethodsForEmail, sendPasswordResetEmail } from 'firebase/auth';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 import { BehaviorSubject } from 'rxjs';
 
@@ -95,6 +95,15 @@ export class AuthService {
   async createPasswordForExistingUser(email: string, password: string): Promise<{ success: boolean; error?: any }> {
     try {
       await createUserWithEmailAndPassword(this.auth, email, password);
+      return { success: true };
+    } catch (error: any) {
+      return { success: false, error: { message: error.message } };
+    }
+  }
+
+  async resetPassword(email: string): Promise<{ success: boolean; error?: any }> {
+    try {
+      await sendPasswordResetEmail(this.auth, email);
       return { success: true };
     } catch (error: any) {
       return { success: false, error: { message: error.message } };

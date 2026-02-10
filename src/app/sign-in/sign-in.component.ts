@@ -18,9 +18,7 @@ export class SignInComponent {
   signInForm: FormGroup;
   errorMessage = '';
   emailErrorMessage = '';
-  passwordPlaceholder = 'Enter your password';
-  passwordLabel = 'Password';
-  isCreatingPassword = false;
+  successMessage = '';
   lastCheckedEmail = '';
 
   constructor(
@@ -34,30 +32,6 @@ export class SignInComponent {
     });
   }
 
-  async checkEmail() {
-    const email = this.signInForm.get('email')?.value;
-    this.emailErrorMessage = '';
-
-    if (email && this.signInForm.get('email')?.valid && email !== this.lastCheckedEmail) {
-      this.lastCheckedEmail = email;
-      console.log('Checking email:', email);
-      const hasPassword = await this.authService.checkIfUserHasPassword(email);
-      console.log('Has password result:', hasPassword);
-
-      if (hasPassword === null) {
-        this.emailErrorMessage = 'Email not registered. Try a different one or sign up as a volunteer.';
-      } else if (hasPassword === false) {
-        this.passwordPlaceholder = 'Create your password';
-        this.passwordLabel = 'Create Password';
-        this.isCreatingPassword = true;
-      } else {
-        this.passwordPlaceholder = 'Enter your password';
-        this.passwordLabel = 'Password';
-        this.isCreatingPassword = false;
-      }
-    }
-  }
-
   async onSubmit() {
     if (this.signInForm.valid) {
       const { email, password } = this.signInForm.value;
@@ -69,6 +43,25 @@ export class SignInComponent {
       } else {
         this.errorMessage = signInResult.error?.message || 'Invalid email or password';
       }
+    }
+  }
+
+  async onForgotPassword() {
+    const email = this.signInForm.get('email')?.value;
+    
+    if (!email) {
+      this.errorMessage = 'Please enter your email address';
+      return;
+    }
+
+    const result = await this.authService.resetPassword(email);
+    
+    if (result.success) {
+      this.successMessage = 'If an account exists with this email, a password reset link will be sent. Check your inbox and spam folder.';
+      this.errorMessage = '';
+    } else {
+      this.errorMessage = result.error?.message || 'Failed to send reset email';
+      this.successMessage = '';
     }
   }
 }

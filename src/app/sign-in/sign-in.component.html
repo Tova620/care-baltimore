@@ -22,10 +22,17 @@
           formControlName="password"
           placeholder="Enter your password"
           class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none">
+        <div class="text-right mt-2">
+          <a (click)="onForgotPassword()" class="text-sm text-indigo-600 hover:text-indigo-800 cursor-pointer">Forgot Password?</a>
+        </div>
       </div>
 
       <div *ngIf="errorMessage" class="text-red-600 text-sm mb-4">
         {{ errorMessage }}
+      </div>
+
+      <div *ngIf="successMessage" class="text-green-600 text-sm mb-4">
+        {{ successMessage }}
       </div>
 
       <button mat-raised-button color="primary" type="submit" [disabled]="!signInForm.valid" class="w-full">
