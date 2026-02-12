@@ -15,6 +15,7 @@ import { ChanukahComponent } from './chanukah/chanukah.component';
 import { WeeklyVisitsComponent } from './weekly-visits/weekly-visits.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { VisitLogComponent } from './visit-log/visit-log.component';
+import { CreatePasswordComponent } from './create-password/create-password.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'chanukah', component: ChanukahComponent },
   { path: 'weekly-visits', component: WeeklyVisitsComponent },
   { path: 'sign-in', component: SignInComponent },
+  { path: 'create-password', component: CreatePasswordComponent },
   { path: 'visit-log', component: VisitLogComponent, canActivate: [AuthGuard] },
 ];
 

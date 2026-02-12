@@ -19,7 +19,6 @@ export class SignInComponent {
   errorMessage = '';
   emailErrorMessage = '';
   successMessage = '';
-  lastCheckedEmail = '';
 
   constructor(
     private fb: FormBuilder,
@@ -30,6 +29,10 @@ export class SignInComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
+  }
+
+  goToCreatePassword() {
+    this.router.navigate(['/create-password']);
   }
 
   async onSubmit() {
@@ -54,10 +57,25 @@ export class SignInComponent {
       return;
     }
 
+    // Check if user has a password first
+    const hasPassword = await this.authService.checkIfUserHasPassword(email);
+    
+    if (hasPassword === null) {
+      this.errorMessage = 'Email not registered as a volunteer';
+      this.successMessage = '';
+      return;
+    }
+    
+    if (!hasPassword) {
+      this.errorMessage = 'You need to create a password first. Please contact the administrator.';
+      this.successMessage = '';
+      return;
+    }
+
     const result = await this.authService.resetPassword(email);
     
     if (result.success) {
-      this.successMessage = 'If an account exists with this email, a password reset link will be sent. Check your inbox and spam folder.';
+      this.successMessage = 'Password reset link sent. Check your inbox and spam folder.';
       this.errorMessage = '';
     } else {
       this.errorMessage = result.error?.message || 'Failed to send reset email';

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { getApp } from 'firebase/app';
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, User, createUserWithEmailAndPassword, fetchSignInMethodsForEmail, sendPasswordResetEmail } from 'firebase/auth';
-import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, User, createUserWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
+import { getFirestore, collection, query, where, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -73,16 +73,29 @@ export class AuthService {
         return null; // Email not registered
       }
 
-      // Check if user has Firebase Auth account
+      // Check the hasPassword field in Firestore
+      const volunteerData = querySnapshot.docs[0].data();
+      
+      // If hasPassword field exists, use it
+      if (volunteerData['hasPassword'] !== undefined) {
+        return volunteerData['hasPassword'] === true;
+      }
+      
+      // Fallback: try signing in with dummy password to check
       try {
-        const signInMethods = await fetchSignInMethodsForEmail(this.auth, email);
-        console.log('Sign in methods for', email, ':', signInMethods);
-        return signInMethods.length > 0;
+        await signInWithEmailAndPassword(this.auth, email, '__test__invalid__');
+        return true;
       } catch (authError: any) {
-        console.log('Auth error:', authError);
-        // If fetchSignInMethodsForEmail fails, assume they need to create password
-        if (authError.code === 'auth/invalid-email') {
-          return null;
+        // If we get invalid-login-credentials, account exists
+        if (authError.code === 'auth/invalid-login-credentials' || 
+            authError.code === 'auth/wrong-password' ||
+            authError.code === 'auth/invalid-credential') {
+          // Update Firestore with hasPassword flag
+          const volunteerDoc = querySnapshot.docs[0];
+          await updateDoc(doc(this.db, 'volunteers', volunteerDoc.id), {
+            hasPassword: true
+          });
+          return true;
         }
         return false;
       }
@@ -95,6 +108,19 @@ export class AuthService {
   async createPasswordForExistingUser(email: string, password: string): Promise<{ success: boolean; error?: any }> {
     try {
       await createUserWithEmailAndPassword(this.auth, email, password);
+      
+      // Update Firestore to mark that user has password
+      const volunteersRef = collection(this.db, 'volunteers');
+      const q = query(volunteersRef, where('email', '==', email));
+      const querySnapshot = await getDocs(q);
+      
+      if (!querySnapshot.empty) {
+        const volunteerDoc = querySnapshot.docs[0];
+        await updateDoc(doc(this.db, 'volunteers', volunteerDoc.id), {
+          hasPassword: true
+        });
+      }
+      
       return { success: true };
     } catch (error: any) {
       return { success: false, error: { message: error.message } };
